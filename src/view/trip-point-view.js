@@ -1,32 +1,60 @@
 import { createElement } from '../render.js';
+import { humanizePointTime, humanizePointDate, getDurationDate, humanizePointDateTime } from '../utils.js';
+import { pointTypeOffer } from '../mock/offer.js';
 
+const createTemplate = (point) => {
+  const { basePrice, date, dateFrom, dateTo, destination, offers, type} = point;
 
-const createTemplate = () => `<li class="trip-events__item">
+  const dateBase = humanizePointDate(date);
+  const dateMachine = humanizePointDateTime(date);
+  const dateStart = humanizePointTime(dateFrom);
+  const dateEnd = humanizePointTime(dateTo);
+  const duration = getDurationDate(dateTo, dateFrom);
+
+  const getListOffers = () => {
+    const elementsListOffers = [];
+    const typeOffers = pointTypeOffer(point);
+    offers.forEach((item) => {
+      for (let i = 0; i < typeOffers.offers.length; i += 1) {
+        if (item === typeOffers.offers[i].id) {
+          const elemetnList = `<li class="event__offer">
+                               <span class="event__offer-title">${typeOffers.offers[i].title}</span>
+                               &plus;&euro;&nbsp;
+                               <span class="event__offer-price">${typeOffers.offers[i].price}</span>
+                               </li>`;
+          elementsListOffers.push(elemetnList);
+        } else {
+          const elementList = '';
+          elementsListOffers.push(elementList);
+        }
+      }
+    });
+    const result = `<ul class="event__selected-offers">${elementsListOffers.join('')}</ul>`;
+    return result;
+  };
+
+  const listOffersElement = getListOffers();
+
+  return `<li class="trip-events__item">
               <div class="event">
-                <time class="event__date" datetime="2019-03-18">MAR 18</time>
+                <time class="event__date" datetime="${dateMachine}">${dateBase}</time>
                 <div class="event__type">
-                  <img class="event__type-icon" width="42" height="42" src="img/icons/taxi.png" alt="Event type icon">
+                  <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
                 </div>
-                <h3 class="event__title">Taxi Amsterdam</h3>
+                <h3 class="event__title">${type} ${destination}</h3>
                 <div class="event__schedule">
                   <p class="event__time">
-                    <time class="event__start-time" datetime="2019-03-18T10:30">10:30</time>
+                    <time class="event__start-time" datetime="${dateFrom}">${dateStart}</time>
                     &mdash;
-                    <time class="event__end-time" datetime="2019-03-18T11:00">11:00</time>
+                    <time class="event__end-time" datetime="${dateTo}">${dateEnd}</time>
                   </p>
-                  <p class="event__duration">30M</p>
+                  <p class="event__duration">${duration}M</p>
                 </div>
                 <p class="event__price">
-                  &euro;&nbsp;<span class="event__price-value">20</span>
+                  &euro;&nbsp;<span class="event__price-value">${basePrice}</span>
                 </p>
                 <h4 class="visually-hidden">Offers:</h4>
-                <ul class="event__selected-offers">
-                  <li class="event__offer">
-                    <span class="event__offer-title">Order Uber</span>
-                    &plus;&euro;&nbsp;
-                    <span class="event__offer-price">20</span>
-                  </li>
-                </ul>
+                ${listOffersElement}
                 <button class="event__favorite-btn event__favorite-btn--active" type="button">
                   <span class="visually-hidden">Add to favorite</span>
                   <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
@@ -37,12 +65,16 @@ const createTemplate = () => `<li class="trip-events__item">
                   <span class="visually-hidden">Open event</span>
                 </button>
               </div>
-            </li>
-`;
+            </li>`;
+};
 
 export default class TripPointView {
+  constructor(point) {
+    this.point = point;
+  }
+
   getTemplate() {
-    return createTemplate();
+    return createTemplate(this.point);
   }
 
   getElement() {
