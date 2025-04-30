@@ -12,8 +12,9 @@ const generatePoints = () => {
 
 
 export default class PointModel {
-  //points = Array.from({length: POINT_COUNT}, generatePoint);
-  points = generatePoints();
+  #points = generatePoints();
 
-  getPoints = () => this.points;
+  get points() {
+    return this.#points;
+  }
 }

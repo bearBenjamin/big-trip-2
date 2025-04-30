@@ -13,6 +13,8 @@ const humanizePointTime = (dueDate) => dayjs(dueDate).format('HH:mm');
 const humanizePointDate = (dueDate) => dayjs(dueDate).format('MMM DD');
 const humanizePointDateTime = (dueDate) => dayjs(dueDate).format('YYYY-MM-DD');
 
+const humanizeDateToFormEditing = (dueDate) => dayjs(dueDate).format('DD/MM/YY HH:mm');
+
 const getDurationDate = (start, end) => {
   const date1 = dayjs(start);
   const date2 = dayjs(end);
@@ -20,4 +22,4 @@ const getDurationDate = (start, end) => {
   return duration;
 };
 
-export {getRandomInteger, humanizePointTime, humanizePointDate, humanizePointDateTime, getDurationDate};
+export {getRandomInteger, humanizePointTime, humanizePointDate, humanizePointDateTime, getDurationDate, humanizeDateToFormEditing};

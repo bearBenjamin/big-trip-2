@@ -179,10 +179,11 @@ const createTemplate = (point) => {
 };
 
 export default class FormAddNewEvenView {
-  point = {};
+  #element = null;
+  #point = {};
 
   constructor () {
-    this.point = {
+    this.#point = {
       basePrice: '',
       date: '',
       dateFrom: '',
@@ -195,18 +196,18 @@ export default class FormAddNewEvenView {
     };
   }
 
-  getTemplate() {
-    return createTemplate(this.point);
+  get template() {
+    return createTemplate(this.#point);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }
