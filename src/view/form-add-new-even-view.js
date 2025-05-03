@@ -1,6 +1,6 @@
 import { DESTINATION } from '../const.js';
 import { offersModel } from '../mock/offer.js';
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 
 const createTemplate = (point) => {
   const { destination } = point;
@@ -178,11 +178,11 @@ const createTemplate = (point) => {
             </li>`;
 };
 
-export default class FormAddNewEvenView {
-  #element = null;
+export default class FormAddNewEvenView extends AbstractView {
   #point = {};
 
   constructor () {
+    super();
     this.#point = {
       basePrice: '',
       date: '',
@@ -198,16 +198,5 @@ export default class FormAddNewEvenView {
 
   get template() {
     return createTemplate(this.#point);
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }

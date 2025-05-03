@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import { humanizeDateToFormEditing } from '../utils.js';
 import { DESTINATION } from '../const.js';
 import { offersModel } from '../mock/offer.js';
@@ -196,11 +196,11 @@ const createTemplate = (point) => {
             </li>`;
 };
 
-export default class FormEditingTripPointView {
-  #element = null;
+export default class FormEditingTripPointView extends AbstractView {
   #point = null;
 
   constructor (point) {
+    super();
     this.#point = point;
   }
 
@@ -208,14 +208,23 @@ export default class FormEditingTripPointView {
     return createTemplate(this.#point);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-    return this.#element;
-  }
+  setEditFormSubmitHandler = (callback) => {
+    this._callback.formSubmit = callback;
+    this.element.querySelector('form').addEventListener('submit', this.#formSubmitHandler);
+  };
 
-  removeElement() {
-    this.#element = null;
-  }
+  #formSubmitHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.formSubmit();
+  };
+
+  setEditFormBtnRollupClickHandler = (callback) => {
+    this._callback.formBtnRollupClick = callback;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#formBtnRollupClickHandler);
+  };
+
+  #formBtnRollupClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.formBtnRollupClick();
+  };
 }

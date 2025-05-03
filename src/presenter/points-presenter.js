@@ -6,7 +6,7 @@ import ContainerListPointTripView from '../view/container-list-point-trip-view.j
 import TripPointView from '../view/trip-point-view.js';
 import FormAddNewEvenView from '../view/form-add-new-even-view.js';
 import FormEditingTripPointView from '../view/form-editing-trip-point-view.js';
-import { render, RenderPosition } from '../render.js';
+import { render, RenderPosition } from '../framework/render.js';
 
 const header = document.querySelector('.page-header');
 const tripInfoContainer = header.querySelector('.trip-main');
@@ -71,8 +71,7 @@ export default class PointsPresenter {
   #renderPoint(point) {
     const pointComponent = new TripPointView(point);
     //окно редактирования формы создается по клику
-    pointComponent.element.querySelector('.event__rollup-btn').addEventListener('click', (evt) => {
-      evt.preventDefault();
+    pointComponent.setClickHandler(() => {
       this.#renderFormEditin(point, pointComponent);
     });
 
@@ -101,14 +100,12 @@ export default class PointsPresenter {
 
     replacePointToForm();
 
-    formEditingPoint.element.querySelector('form').addEventListener('submit', (evt) => {
-      evt.preventDefault();
+    formEditingPoint.setEditFormSubmitHandler(() => {
       replaceFormToPoint();
       document.removeEventListener('keydown', onEscKeyDown);
     });
 
-    formEditingPoint.element.querySelector('.event__rollup-btn').addEventListener('click', (evt) => {
-      evt.preventDefault();
+    formEditingPoint.setEditFormBtnRollupClickHandler(() => {
       replaceFormToPoint();
       document.removeEventListener('keydown', onEscKeyDown);
     });
