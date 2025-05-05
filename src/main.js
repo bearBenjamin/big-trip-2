@@ -1,4 +1,4 @@
-import PointsPresenter from './presenter/points-presenter.js';
+import PointsPresenter from './presenter/list-points-presenter.js';
 import PointModel from './model/point-model.js';
 import { generateFilter } from './mock/filter.js';
 
