@@ -18,7 +18,7 @@ export default class PointsPresenter {
   #container = null;
   #pointsModel = null;
   #points = [];
-  #tripInfoComponent = new TripInfoView();
+  #tripInfoComponent = new TripInfoView(); //в headere
   #listEmpty = new ListEmptyView();
   #filterComponent = new FilterPointsTripView();
   #sortComponent = new SortPointsTripView();
@@ -39,16 +39,16 @@ export default class PointsPresenter {
   };
 
   #renderListPoint() {
-    render (this.#filterComponent, tripFilterContainer);
+    this.#renderFilter();
 
     if (this.#points.length === 0) {
-      render (this.#listEmpty, this.#container);
+      this.#renderListEmpty();
       return;
     }
 
-    render (this.#tripInfoComponent, tripInfoContainer, RenderPosition.AFTERBEGIN);
-    render (this.#sortComponent, this.#container);
-    render (this.#listPointComponent, this.#container);
+    this.#renderTripInfo();
+    this.#renderSort();
+    this.#renderList();
 
     for (let i = 0; i < this.#points.length; i += 1) {
       this.#renderPoint(this.#points[i]);
@@ -113,4 +113,23 @@ export default class PointsPresenter {
     document.addEventListener('keydown', onEscKeyDown);
   }
 
+  #renderFilter() {
+    render (this.#filterComponent, tripFilterContainer);
+  }
+
+  #renderSort() {
+    render (this.#sortComponent, this.#container);
+  }
+
+  #renderListEmpty() {
+    render (this.#listEmpty, this.#container);
+  }
+
+  #renderTripInfo() {
+    render (this.#tripInfoComponent, tripInfoContainer, RenderPosition.AFTERBEGIN);
+  }
+
+  #renderList() {
+    render (this.#listPointComponent, this.#container);
+  }
 }

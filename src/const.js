@@ -33,5 +33,11 @@ const  DESTINATION = [
   }
 ];
 
+const FilterType = {
+  EVERYTHING: 'evetything',
+  PAST: 'past',
+  FUTURE: 'future',
+};
 
-export { POINT_COUNT, DESTINATION };
+
+export { POINT_COUNT, DESTINATION, FilterType };

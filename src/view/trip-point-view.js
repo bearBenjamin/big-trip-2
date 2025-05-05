@@ -3,10 +3,10 @@ import { humanizePointTime, humanizePointDate, getDurationDate, humanizePointDat
 import { pointTypeOffer } from '../mock/offer.js';
 
 const createTemplate = (point) => {
-  const { basePrice, date, dateFrom, dateTo, destination, offers, type} = point;
+  const { basePrice, dateFrom, dateTo, destination, offers, type} = point;
 
-  const dateBase = humanizePointDate(date);
-  const dateMachine = humanizePointDateTime(date);
+  const dateBase = humanizePointDate(dateFrom);
+  const dateMachine = humanizePointDateTime(dateFrom);
   const dateStart = humanizePointTime(dateFrom);
   const dateEnd = humanizePointTime(dateTo);
   const duration = getDurationDate(dateTo, dateFrom);
