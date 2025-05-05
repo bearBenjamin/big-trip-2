@@ -17,6 +17,7 @@ export default class PointsPresenter {
   #container = null;
   #pointsModel = null;
   #points = [];
+  #pointPresenter = new Map();
   #tripInfoComponent = new TripInfoView(); //в headere
   #listEmpty = new ListEmptyView();
   #filterComponent = new FilterPointsTripView();
@@ -68,9 +69,16 @@ export default class PointsPresenter {
   }
 
   #renderPoint(point) {
-    const pointComponent = new PointPresenter(this.#listPointComponent.element);
-    pointComponent.init(point);
+    const pointPresenter = new PointPresenter(this.#listPointComponent.element);
+    pointPresenter.init(point);
+
+    this.#pointPresenter.set(point.id, pointPresenter);
   }
+
+  #clearPointList = () => {
+    this.#pointPresenter.forEach((presenter) => presenter.destroy());
+    this.#pointPresenter.clear();
+  };
 
   #renderFilter() {
     render (this.#filterComponent, tripFilterContainer);

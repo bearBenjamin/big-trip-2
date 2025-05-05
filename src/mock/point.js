@@ -2,6 +2,7 @@ import { getRandomInteger } from '../utils';
 import { pointTypeOffer } from './offer';
 import { DESTINATION } from '../const';
 import dayjs from 'dayjs';
+import { nanoid } from 'nanoid';
 
 const maxDaysGap = 7;
 const getBasePrice = () => Math.floor(Math.random() * (2000 - 20) + 20);
@@ -30,7 +31,7 @@ function generatePoint () {
     dateFrom: generateStartDate(),
     dateTo: generateEndDate(),
     destination: getDestination(),
-    id: '0',
+    id: nanoid(),
     isFavorite: `${getRandomInteger() === 1}`,
     offers: [],
     type: TYPE[getRandomInteger(0, TYPE.length - 1)]
