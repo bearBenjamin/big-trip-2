@@ -3,9 +3,7 @@ import ListEmptyView from '../view/list-empty-view.js';
 import FilterPointsTripView from '../view/filter-trip-point-view.js';
 import SortPointsTripView from '../view/sort-trip-point-view.js';
 import ContainerListPointTripView from '../view/container-list-point-trip-view.js';
-import TripPointView from '../view/trip-point-view.js';
 import FormAddNewEvenView from '../view/form-add-new-even-view.js';
-import FormEditingTripPointView from '../view/form-editing-trip-point-view.js';
 import { render, RenderPosition } from '../framework/render.js';
 import PointPresenter from './point-presenter.js';
 
@@ -70,51 +68,8 @@ export default class PointsPresenter {
   }
 
   #renderPoint(point) {
-    const pointComponentPr = new PointPresenter(this.#listPointComponent.element);
-    pointComponentPr.init(point);
-
-  //   const pointComponent = new TripPointView(point);
-  //   //окно редактирования формы создается по клику
-  //   pointComponent.setClickHandler(() => {
-  //     this.#renderFormEditin(point, pointComponent);
-  //   });
-
-  //   render (pointComponent, this.#listPointComponent.element);
-  // }
-
-  // //отрисовка окна формы редактирования с обработчиками
-  // #renderFormEditin(point, pointComponent) {
-  //   const formEditingPoint = new FormEditingTripPointView(point);
-
-  //   const replacePointToForm = () => {
-  //     this.#listPointComponent.element.replaceChild(formEditingPoint.element, pointComponent.element);
-  //   };
-
-  //   const replaceFormToPoint = () => {
-  //     this.#listPointComponent.element.replaceChild(pointComponent.element, formEditingPoint.element);
-  //   };
-
-  //   const onEscKeyDown = (evt) => {
-  //     if (evt.key === 'Escape' || evt.key === 'Esc') {
-  //       evt.preventDefault();
-  //       replaceFormToPoint();
-  //       document.removeEventListener('keydown', onEscKeyDown);
-  //     }
-  //   };
-
-  //   replacePointToForm();
-
-  //   formEditingPoint.setEditFormSubmitHandler(() => {
-  //     replaceFormToPoint();
-  //     document.removeEventListener('keydown', onEscKeyDown);
-  //   });
-
-  //   formEditingPoint.setEditFormBtnRollupClickHandler(() => {
-  //     replaceFormToPoint();
-  //     document.removeEventListener('keydown', onEscKeyDown);
-  //   });
-
-  //   document.addEventListener('keydown', onEscKeyDown);
+    const pointComponent = new PointPresenter(this.#listPointComponent.element);
+    pointComponent.init(point);
   }
 
   #renderFilter() {

@@ -1,6 +1,6 @@
 import TripPointView from '../view/trip-point-view';
 import FormEditingTripPointView from '../view/form-editing-trip-point-view';
-import { render } from '../framework/render';
+import { remove, render, replace } from '../framework/render';
 
 export default class PointPresenter {
   #point = null;
@@ -14,14 +14,28 @@ export default class PointPresenter {
 
   init(point) {
     this.#point = point;
+
+    const prevPointComponent = this.#pointComponent;
+
     this.#pointComponent = new TripPointView(point);
 
-    this.#pointComponent.setClickHandler(() => {
-      this.#renderFormEditing(point);
-    });
+    this.#pointComponent.setClickHandler(this.#handleBtnRollUpClick);
 
-    render (this.#pointComponent, this.#listPointContainer);
+    if (prevPointComponent === null) {
+      render (this.#pointComponent, this.#listPointContainer);
+      return;
+    }
+
+    if (this.#listPointContainer.contains(prevPointComponent.element)) {
+      replace(this.#pointComponent, prevPointComponent);
+    }
+
+    remove(prevPointComponent);
   }
+
+  destroy = () => {
+    remove(this.#pointComponent);
+  };
 
   #renderFormEditing(point) {
     this.#formEditingPoint = new FormEditingTripPointView(point);
@@ -47,6 +61,10 @@ export default class PointPresenter {
       this.#replaceFormToPoint();
       document.removeEventListener('keydown', this.#onEscKeyDown);
     }
+  };
+
+  #handleBtnRollUpClick = () => {
+    this.#renderFormEditing(this.#point);
   };
 
   #hadleFormSubmit = () => {
