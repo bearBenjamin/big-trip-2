@@ -1,13 +1,11 @@
-import { FilterType } from '../const';
-import { getEverything, getFuturePoints, getPastPoints } from '../utils';
+import { FilterType } from '../util/const';
+import { getFilterEverything, getFilterFuturePoints, getFilterPastPoints } from '../util/filter';
 
 const generateFilter = (points) => {
-  FilterType.EVERYTHING = getEverything(points);
-  FilterType.FUTURE = getFuturePoints(points);
-  FilterType.PAST = getPastPoints(points);
+  FilterType.EVERYTHING = getFilterEverything(points);
+  FilterType.FUTURE = getFilterFuturePoints(points);
+  FilterType.PAST = getFilterPastPoints(points);
   return FilterType;
 };
 
-
 export { generateFilter };
-

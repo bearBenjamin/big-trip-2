@@ -1,6 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { humanizeDateToFormEditing } from '../utils.js';
-import { DESTINATION } from '../const.js';
+import { humanizeDateToFormEditing } from '../util/utils.js';
+import { DESTINATION } from '../util/const.js';
 import { offersModel } from '../mock/offer.js';
 
 const createTemplate = (point) => {

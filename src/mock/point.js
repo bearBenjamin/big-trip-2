@@ -1,38 +1,29 @@
-import { getRandomInteger } from '../utils';
+import { getRandomInteger } from '../util/utils';
 import { pointTypeOffer } from './offer';
-import { DESTINATION } from '../const';
+import { DESTINATION, TYPE } from '../util/const';
 import dayjs from 'dayjs';
 import { nanoid } from 'nanoid';
+import { POINT_COUNT } from '../util/const';
 
-const maxDaysGap = 7;
 const getBasePrice = () => Math.floor(Math.random() * (2000 - 20) + 20);
-
-const TYPE = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 
 const getDestination = () => DESTINATION[getRandomInteger(0, DESTINATION.length -1)].name;
 
-const generateStartDate = () => {
-  const daysGapStart = getRandomInteger(-maxDaysGap, 0);
+const generateDate = (a, b) => {
+  const daysGapStart = getRandomInteger(a, b);
   const startDay = dayjs().add(daysGapStart, 'day');
   const dateTimeStart = startDay.format();
   return dateTimeStart;
 };
 
-const generateEndDate = () => {
-  const daysGapEnd = getRandomInteger(0, maxDaysGap);
-  const endDay = dayjs().add(daysGapEnd, 'day');
-  const dateTimeEnd = endDay.format();
-  return dateTimeEnd;
-};
-
 function generatePoint () {
   const point = {
     basePrice: getBasePrice(),
-    dateFrom: generateStartDate(),
-    dateTo: generateEndDate(),
+    dateFrom: generateDate(-14, 7),
+    dateTo: generateDate(-31, 31),
     destination: getDestination(),
     id: nanoid(),
-    isFavorite: `${getRandomInteger() === 1}`,
+    isFavorite: false,
     offers: [],
     type: TYPE[getRandomInteger(0, TYPE.length - 1)]
   };
@@ -44,5 +35,11 @@ function generatePoint () {
   return point;
 }
 
-export { generatePoint };
+const generatePoints = () => {
+  const points = Array.from({length: POINT_COUNT}, generatePoint);
+  return points;
+};
+
+
+export { generatePoints };
 

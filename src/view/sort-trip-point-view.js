@@ -3,7 +3,7 @@ import AbstractView from '../framework/view/abstract-view';
 
 const createTemplate = () => `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
             <div class="trip-sort__item  trip-sort__item--day">
-              <input id="sort-day" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-day">
+              <input id="sort-day" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-day" checked>
               <label class="trip-sort__btn" for="sort-day">Day</label>
             </div>
 
@@ -18,7 +18,7 @@ const createTemplate = () => `<form class="trip-events__trip-sort  trip-sort" ac
             </div>
 
             <div class="trip-sort__item  trip-sort__item--price">
-              <input id="sort-price" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-price" checked>
+              <input id="sort-price" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-price">
               <label class="trip-sort__btn" for="sort-price">Price</label>
             </div>
 
@@ -29,7 +29,26 @@ const createTemplate = () => `<form class="trip-events__trip-sort  trip-sort" ac
           </form>`;
 
 export default class SortPointsTripView extends AbstractView {
+  #SortType = null;
+
   get template() {
     return createTemplate();
   }
+
+  setBtnClickHandler = (callback) => {
+    this._callback.click = callback;
+    this.element.querySelectorAll('.trip-sort__input').forEach((btnSort) => {
+      btnSort.addEventListener('change', (evt) => {
+        evt.preventDefault();
+        this.noAtribute();
+        btnSort.setAttribute('checked', '');
+        this.#SortType = btnSort.value;
+        this._callback.click(this.#SortType);
+      });
+    });
+  };
+
+  noAtribute = () => {
+    this.element.querySelectorAll('.trip-sort__input').forEach((btn) => btn.removeAttribute('checked'));
+  };
 }

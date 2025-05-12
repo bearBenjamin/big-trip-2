@@ -1,4 +1,4 @@
-import { DESTINATION } from '../const.js';
+import { DESTINATION } from '../util/const.js';
 import { offersModel } from '../mock/offer.js';
 import AbstractView from '../framework/view/abstract-view.js';
 

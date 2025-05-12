@@ -1,4 +1,6 @@
-const POINT_COUNT = 7;
+const POINT_COUNT = 5;
+
+const TYPE = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 
 const  DESTINATION = [
   {
@@ -34,10 +36,16 @@ const  DESTINATION = [
 ];
 
 const FilterType = {
-  EVERYTHING: 'evetything',
+  EVERYTHING: 'everything',
   PAST: 'past',
   FUTURE: 'future',
 };
 
+const SortType = {
+  DAY: 'sort-day',
+  TIME: 'sort-time',
+  PRICE: 'sort-price',
+};
 
-export { POINT_COUNT, DESTINATION, FilterType };
+
+export { POINT_COUNT, TYPE, DESTINATION, FilterType, SortType };
